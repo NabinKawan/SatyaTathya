@@ -1,1 +1,2 @@
 pydantic
+dependency-injector~=4.40.0
