@@ -1,0 +1,112 @@
+input{
+    padding: 5px;
+    margin: 10px 0px;
+    width: 300px;
+}
+.App{
+    display: flex;
+    flex-direction: column ;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+.block{
+    display: flex;
+    flex-direction: column;
+}
+.crd{
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    justify-content: center;
+}
+.form_class .btn{
+    background-color: blue;
+    display: flex;
+    width: 80px;
+    justify-content: center;
+}
+.form_class{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
+    
+}
+.rounded-lg {
+    position: relative;
+  }
+
+ #button1 {
+  position: absolute;
+  top: 140px; 
+  right: 30px; 
+  z-index: 10;
+  border-radius: 10%;
+}
+#button2 {
+    position: absolute;
+    top: 140px;
+    right: 80px; 
+    z-index: 10;
+    border-radius: 10%;
+  
+}  
+.main {
+    overflow: auto;
+    max-height: 200px; 
+  }
+  
+  .main::-webkit-scrollbar {
+    width: 0.1em;
+    background-color: #F5F5F5;
+  }
+  
+  /* .main::-webkit-scrollbar-thumb {
+    background-color: white;
+  } */
+  .inside{
+    background-color: #1565C0;
+    color: white;
+  }
+  .name{
+    display: flex;
+    justify-content: center;
+  }
+  @media (max-width:600px) {
+    .bg-blue-800 {
+      position: relative;
+      z-index: -100;
+    }
+    #button1 {
+    position: absolute;
+    top: 180px;
+    right: 30px;
+      
+    }
+    #button2 {
+        position: absolute;
+        top: 180px;
+        right: 80px;
+          
+        }
+  }
+  @media (max-width:500px) {
+    .bg-blue-800 {
+      position: relative;
+      z-index: -100;
+    }
+    #button1 {
+    position: absolute;
+    top: 190px;
+    right: 30px;
+      
+    }
+    #button2 {
+        position: absolute;
+        top: 190px;
+        right: 80px;
+          
+        }
+  }
+  

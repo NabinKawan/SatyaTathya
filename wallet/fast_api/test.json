@@ -1,0 +1,36 @@
+{
+"Voters":[
+   {
+    "id":1,
+    "name":"Ram",
+    "gender":"M",
+    "voted":false
+   },
+   {
+    "id":2,
+    "name":"Ramesh",
+    "gender":"M",
+    "voted":false
+   },
+   {
+    "id":3,
+    "name":"Sita",
+    "gender":"F",
+    "voted":false
+   },
+   {
+    "id":4,
+    "name":"Rita",
+    "gender":"F",
+    "voted":false
+   },
+   {
+    "id":5,
+    "name":"Hari",
+    "gender":"M",
+    "voted":false
+   }
+
+
+]
+}
