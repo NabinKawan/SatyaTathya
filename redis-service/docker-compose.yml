@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  cache:
+    container_name: "redis_cache"
+    image: "redis"
+    volumes:
+      - ./data:/data
+    ports:
+      - "9000:6379"
