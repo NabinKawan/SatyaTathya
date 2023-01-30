@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import "../App.css";
 import Details from "../screens/Details";
-
+import { useNavigate } from "react-router";
+import {Link } from "react-router-dom";
 function Body() {
-  const [items, setItems] = useState([]);
+  const navigate = useNavigate();
   const [voterId, setVoterId] = useState("");
   const [password, setPassword] = useState("");
-
+  const [items, setItems] = useState([]);
   const handleSubmit = (event) => {
+
+    
     event.preventDefault();
     fetch("http://localhost:8000/api/login/", {
       method: "POST",
@@ -17,14 +20,26 @@ function Body() {
       .then((response) => response.json())
       .then((data) => {
         if (data.message === "Success") {
-          <Details />;
           console.log("success");
+          navigate('/details',{ state: { voterId,password } });
+          
         } else {
           console.log("Wrong username password");
         }
       });
   };
-
+  const fetchApiData = () => {
+    fetch("http://localhost:8000/")
+      .then((r) => {
+        return r.json();
+      })
+      .then((data) => {
+        setItems(data);
+      });
+  };
+  useEffect(() => {
+    fetchApiData();
+  }, []);
   return (
     <div className="card position-absolute top-50 start-50 translate-middle p-5">
       <form onSubmit={handleSubmit} className="form_class">

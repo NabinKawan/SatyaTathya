@@ -1,7 +1,11 @@
 import "../App.css";
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 function Details() {
   const [items, setItems] = useState([]);
+  const location = useLocation();
+  const voteid = location.state.voterId;
+  const value2 = location.state.password;
   const fetchApiData = () => {
     fetch("http://localhost:8000/")
       .then((r) => {
@@ -18,16 +22,12 @@ function Details() {
     <div className="card position-absolute top-50 start-50 translate-middle shadow-lg">
       <div class="rounded-lg p-4">
         <div class="bg-blue-800 text-white p-8 z-40 td ">
-          <h1 className="name">
-            {items.map((data) => {
-              return <>{data.username}</>;
-            })}
-          </h1>
+          <h1 className="name">{voteid}</h1>
           <h1 className="text-xl font-bold text-white ">Transaction Details</h1>
           <p>
             Your Balance:{" "}
             {items.map((data) => {
-              return <>{data.balance}</>;
+              if (voteid == data.username) return <>{data.balance}</>;
             })}
           </p>
         </div>
