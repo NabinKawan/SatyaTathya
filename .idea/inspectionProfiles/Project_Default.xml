@@ -1,0 +1,25 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <value>
+          <list size="1">
+            <item index="0" class="java.lang.String" itemvalue="codecs" />
+          </list>
+        </value>
+      </option>
+    </inspection_tool>
+    <inspection_tool class="PyUnresolvedReferencesInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredIdentifiers">
+        <list>
+          <option value="app.services.marketplace_service.configs" />
+          <option value="app.services.wallet_service.TokenInfo" />
+          <option value="app.common.service.Transaction" />
+          <option value="app.common.service.List" />
+          <option value="app.common.service.asyncio" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>

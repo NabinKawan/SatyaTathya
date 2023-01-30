@@ -1,11 +1,11 @@
-from blockchain.dto.block_dto import BlockDto
+from app.models.dtos.block_dto import BlockDto
 from typing import List
-
-from blockchain.enums.data_format_enum import DataFormatEnum
 
 
 class ChainDatabase(object):
-
+    """
+    Singleton Class
+    """
     chain_datas: List[BlockDto] = []
 
     def __new__(cls, *args, **kwargs) -> None:
