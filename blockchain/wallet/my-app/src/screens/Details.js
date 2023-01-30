@@ -1,8 +1,10 @@
 import "../App.css";
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router";
 import { useLocation } from "react-router-dom";
 function Details() {
   const [items, setItems] = useState([]);
+  const navigate = useNavigate();
   const location = useLocation();
   const voteid = location.state.voterId;
   const value2 = location.state.password;
@@ -31,7 +33,14 @@ function Details() {
             })}
           </p>
         </div>
-        <button type="submit" id="button1" className=" bg-blue-500 p-0.5">
+        <button
+          type="submit"
+          id="button1"
+          className=" bg-blue-500 p-0.5"
+          onClick={() => {
+            navigate("/send_ui");
+          }}
+        >
           Send
         </button>
         <button type="submit" id="button2" className=" bg-blue-500 p-0.5">
