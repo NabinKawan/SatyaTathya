@@ -13,8 +13,29 @@ def main() -> None:
     default_datas = db_service.get_all_datas()
     print(default_datas)
     json_datas = db_service.get_all_datas(data_type=DataFormatEnum.JSON)
-    print(json_datas)
-
+    print(json_datas )
+    print("\n")
 
 if __name__ == '__main__':
     main()
+
+
+import asyncio
+import json
+import websockets
+
+async def hello():
+    json_datas = db_service.get_all_datas(data_type=DataFormatEnum.JSON)
+    print(type(json_datas))
+
+    async with websockets.connect("ws://localhost:8000/ws") as websocket:
+        print(await websocket.recv()) 
+        # await websocket.send(bytes(str(json_datas),"utf-8"))
+        await websocket.send(json.dumps(json_datas))
+        print(type(json.dumps(json_datas)))
+        print(type(json.loads(json.dumps(json_datas))))
+
+asyncio.run(hello())  
+
+
+
