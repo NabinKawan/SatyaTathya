@@ -13,8 +13,6 @@ function Send_UI() {
           <label htmlFor="">Enter Receiver's Wallet Id </label>
           <input
             type="text"
-            // value={voterId}
-            // onChange={(e) => setVoterId(e.target.value)}
             placeholder="Receiver's Wallet Id"
             className="form-control"
           />
@@ -23,8 +21,6 @@ function Send_UI() {
             type="number"
             name=""
             className="form-control"
-            // value={password}
-            // onChange={(e) => setPassword(e.target.value)}
             placeholder="Balance"
           />
         </div>
@@ -36,17 +32,6 @@ function Send_UI() {
   </div>
   </div>
   )
-}
-function Cards({ Title }) {
-  return (
-    <div className="card main pl-5 pr-4 pb-3">
-      <div className="card inside mb-3">
-        <h2>{Title}</h2>
-        <p>200$</p>
-      </div>
-    
-    </div>
-  );
 }
 
 export default Send_UI

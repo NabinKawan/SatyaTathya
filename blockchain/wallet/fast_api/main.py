@@ -49,6 +49,27 @@ async def login(request: Request, db: Session = Depends(get_db)):
         return {"message": "Invalid username or password"}
 
 
+
+@app.post("/api/transfer")
+async def transfer_balance(request: Request, sender_wallet_id: str, receiver_wallet_id: str, amount: int, db: Session = Depends(get_db)):
+    sender = db.query(models.User).filter(models.User.username == sender_wallet_id).first()
+    receiver = db.query(models.User).filter(models.User.username == receiver_wallet_id).first()
+    if sender and receiver:
+        if sender.balance >= amount:
+            sender.balance -= amount
+            receiver.balance += amount
+            db.add(sender)
+            db.add(receiver)
+            db.commit()
+            return {"message": "Transfer successful"}
+        else:
+            return HTTPException(status_code=400, detail="Insufficient balance")
+    else:
+        return HTTPException(status_code=400, detail="Invalid wallet id")
+
+
+
+
 @app.post("/api/register/")
 def register(username: str, password: str,balance:str, db: Session = Depends(get_db)):
     user = models.User(username=username, password=password,balance=balance)
