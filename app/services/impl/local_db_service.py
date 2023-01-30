@@ -10,7 +10,8 @@ db = redis_db
 class LocalDbService(DbService):
 
     def add_data(self, block: BlockDto):
-        db.set(block.block_hash,json.dumps(block.json()))
+        print(block.json())
+        db.set(block.block_hash,block.json())
 
     def get_prev_hash(self):
         pass
