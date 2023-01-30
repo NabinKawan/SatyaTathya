@@ -1,2 +1,5 @@
 pydantic
 dependency-injector~=4.40.0
+fastapi
+websocket
+SQLAlchemy

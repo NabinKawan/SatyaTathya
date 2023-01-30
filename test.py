@@ -1,6 +1,6 @@
 from typing import Union
 from fastapi import FastAPI, WebSocket
-import json
+
 
 app = FastAPI()
 
@@ -15,7 +15,7 @@ def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
 
 
-@app.websocket("/ws")
+@app.websocket("/ws/")
 async def websocket_endpoint(websocket: WebSocket):
     await websocket.accept()
     print("accepted")

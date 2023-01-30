@@ -1,4 +1,4 @@
-from fastapi import FastAPI,Request,HTTPException,Depends
+from fastapi import FastAPI,Request,HTTPException,Depends, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy import create_engine
@@ -56,6 +56,18 @@ def register(username: str, password: str,balance:str, db: Session = Depends(get
     db.commit()
     db.refresh(user)
     return {"message": "Success"}
+    
+
+@app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+    print("accepted")
+
+    while True:
+        await websocket.send_text("From API")
+        data = await websocket.receive_json()
+        print(data)
+        
 
 
 

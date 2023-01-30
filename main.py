@@ -26,7 +26,7 @@ import websockets
 
 async def hello():
     json_datas = db_service.get_all_datas(data_type=DataFormatEnum.JSON)
-    print(type(json_datas))
+    # print(type(json_datas))
 
     async with websockets.connect("ws://localhost:8000/ws") as websocket:
         print(await websocket.recv()) 
