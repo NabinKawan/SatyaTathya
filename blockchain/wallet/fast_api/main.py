@@ -51,7 +51,11 @@ async def login(request: Request, db: Session = Depends(get_db)):
 
 
 @app.post("/api/transfer")
-async def transfer_balance(request: Request, sender_wallet_id: str, receiver_wallet_id: str, amount: int, db: Session = Depends(get_db)):
+async def transfer_balance(request: Request, db: Session = Depends(get_db)):
+    data = await request.json()
+    sender_wallet_id = data["sender_wallet_id"]
+    receiver_wallet_id = data["receiver_wallet_id"]
+    amount =int(data["amount"])
     sender = db.query(models.User).filter(models.User.username == sender_wallet_id).first()
     receiver = db.query(models.User).filter(models.User.username == receiver_wallet_id).first()
     if sender and receiver:
@@ -66,8 +70,6 @@ async def transfer_balance(request: Request, sender_wallet_id: str, receiver_wal
             return HTTPException(status_code=400, detail="Insufficient balance")
     else:
         return HTTPException(status_code=400, detail="Invalid wallet id")
-
-
 
 
 @app.post("/api/register/")
