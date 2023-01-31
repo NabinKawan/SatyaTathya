@@ -5,7 +5,7 @@ function Send_UI() {
   
   const [sender_wallet_id, setsender_wallet_id ]= useState("");
   const [receiver_wallet_id, setreceiver_wallet_id] = useState("");
-  const [amount, setamount] = useState("");
+  const [amount, setamount] = useState();
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -18,7 +18,7 @@ function Send_UI() {
       .then((data) => {
         if (data.message === "Transfer successful") {
           console.log("Transfer successful");
-          navigate("/details");
+          navigate('/details',{ state: {sender_wallet_id} });
         } else {
           console.log(data.message);
         }
@@ -49,14 +49,13 @@ function Send_UI() {
             placeholder="Receiver's Wallet Id"
             className="form-control"
           />
-          <label htmlFor="">Enter Balance</label>
+          <label htmlFor="">Enter Amount </label>
           <input
-            type="number"
-            name=""
+            type="text"
             value={amount}
             onChange={(e) => setamount(e.target.value)}
-            className="form-control"
             placeholder="Balance"
+            className="form-control"
           />
         </div>
         <button type="submit" className="btn btn-primary">
