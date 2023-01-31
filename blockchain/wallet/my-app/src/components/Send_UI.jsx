@@ -2,16 +2,15 @@ import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from "react-router";
 function Send_UI() {
-  const [card_number, setcard_number ]= useState("");
-const [card_holder_name, setcard_holder_name ] = useState("");
-const [expiry_date, setexpiry_date ] = useState("");
-const [cvv, setcvv ] = useState("");
+
 
   const [sender_wallet_id, setsender_wallet_id ]= useState("");
   const [receiver_wallet_id, setreceiver_wallet_id] = useState("");
   const [amount, setamount] = useState("");
+  const [message, setMessage] = useState("");
   const navigate = useNavigate();
-  const handleSubmit = (event) => {
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
     fetch("http://localhost:8000/api/transfer/", {
       method: "POST",
@@ -27,6 +26,16 @@ const [cvv, setcvv ] = useState("");
           console.log(data.message);
         }
       });
+      
+      const response = await fetch("http://localhost:8000/api/cards", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    Senders_name: sender_wallet_id,
+    Receivers_name: receiver_wallet_id,
+    balance: amount,
+  }),
+});
   };
 
   return (

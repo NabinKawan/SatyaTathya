@@ -11,9 +11,8 @@ class User(Base):
     balance=Column(Integer)
 
 class Card(Base):
-    __tablename__ = 'cards'
-
-    id = Column(Integer, primary_key=True)  
-    Senders_name = Column(String, unique=True)
-    Receivers_name = Column(String)
-    balance = Column(Integer)
+    __tablename__ = "cards"
+    id = Column(Integer, primary_key=True, index=True)
+    sender_name = Column(String, nullable=False)
+    receiver_name = Column(String, nullable=False)
+    balance = Column(Integer, nullable=False)

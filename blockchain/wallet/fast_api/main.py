@@ -7,7 +7,7 @@ from pydantic import BaseModel
 import models
 from database import engine,SessionLocal
 from sqlalchemy.orm import Session
-from models import Card
+# from models import Card
 
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
@@ -34,12 +34,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-@app.post("/cards")
-def create_card(Senders_name: str, Receivers_name: str, balance: int, db: Session = Depends(get_db)):
-    card = Card(Senders_name=Senders_name, Receivers_name=Receivers_name, balance=balance)
-    db.add(card)
-    db.commit()
-    return {"message": "Card created successfully"}
+@app.post("/api/cards")
+async def create_card(request: Request, db: Session = Depends(get_db)):
+    data = await request.json()
+    try:
+        card = models.Card(sender_name=data["Senders_name"], receiver_name=data["Receivers_name"], balance=data["balance"])
+        db.add(card)
+        db.commit()
+        return {"message": "Card created successfully"}
+    except Exception as e:
+        return {"message": "An error occurred: {}".format(str(e))}
+
+
+@app.get("/api/get_cards")
+def get_all_cards(db:Session=Depends(get_db)):
+    cards = db.query(models.Card).all()
+    return cards
 
 @app.get("/")
 def show_users(db:Session=Depends(get_db)):
