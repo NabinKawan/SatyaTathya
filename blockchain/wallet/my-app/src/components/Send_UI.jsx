@@ -1,12 +1,12 @@
 import React from 'react'
 import { useState } from 'react';
-
+import { useNavigate } from "react-router";
 function Send_UI() {
   
   const [sender_wallet_id, setsender_wallet_id ]= useState("");
   const [receiver_wallet_id, setreceiver_wallet_id] = useState("");
   const [amount, setamount] = useState("");
-
+  const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
     fetch("http://localhost:8000/api/transfer/", {
@@ -18,6 +18,7 @@ function Send_UI() {
       .then((data) => {
         if (data.message === "Transfer successful") {
           console.log("Transfer successful");
+          navigate("/details");
         } else {
           console.log(data.message);
         }
