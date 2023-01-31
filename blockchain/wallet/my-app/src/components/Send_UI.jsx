@@ -2,10 +2,14 @@ import React from 'react'
 import { useState } from 'react';
 import { useNavigate } from "react-router";
 function Send_UI() {
-  
+  const [card_number, setcard_number ]= useState("");
+const [card_holder_name, setcard_holder_name ] = useState("");
+const [expiry_date, setexpiry_date ] = useState("");
+const [cvv, setcvv ] = useState("");
+
   const [sender_wallet_id, setsender_wallet_id ]= useState("");
   const [receiver_wallet_id, setreceiver_wallet_id] = useState("");
-  const [amount, setamount] = useState();
+  const [amount, setamount] = useState("");
   const navigate = useNavigate();
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -18,7 +22,7 @@ function Send_UI() {
       .then((data) => {
         if (data.message === "Transfer successful") {
           console.log("Transfer successful");
-          navigate('/details',{ state: {sender_wallet_id} });
+          navigate('/details', { state: { sender_wallet_id, receiver_wallet_id,amount } });
         } else {
           console.log(data.message);
         }

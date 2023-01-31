@@ -7,7 +7,11 @@ function Details() {
   const [amounts, setAmounts] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
-  const sender = location.state.sender_wallet_id;
+  const dataArray = [location.state];
+  const { sender_wallet_id } = location.state;
+  const { receiver_wallet_id } = location.state;
+  const { amount } = location.state;
+
   const voteid = location.state.voterId;
   const fetchApiData = () => {
     fetch("http://localhost:8000/")
@@ -26,15 +30,15 @@ function Details() {
       <div class="rounded-lg p-4">
         <div class="bg-blue-800 text-white p-8 z-40 td ">
           <h1 className="name">{voteid}</h1>
-          <h1 className="name">{sender}</h1>
+          <h1 className="name">{sender_wallet_id}</h1>
           <h1 className="text-xl font-bold text-white ">Transaction Details</h1>
-          <p>
-            Your Balance:{" "}
-            {items.map((data) => {
-              if (voteid == data.username) return <>{data.balance}</>;
-              if (sender == data.username) return <>{data.balance}</>;
-            })}
-          </p>
+          Your Balance:{" "}
+          {items.map((data, index) => {
+            if (voteid == data.username)
+              return <p key={index}>{data.balance}</p>;
+            if (sender_wallet_id == data.username)
+              return <p key={index}>{data.balance}</p>;
+          })}
         </div>
         <button
           type="submit"
@@ -55,28 +59,26 @@ function Details() {
           Receive
         </button>
       </div>
-      <Cards Title={"Transaction one"} />
+
+      {dataArray.map((item, index) => (
+        <Cards
+          key={index}
+          sender={item.sender_wallet_id}
+          receiver={item.receiver_wallet_id}
+          amount={item.amount}
+        />
+      ))}
     </div>
   );
 }
-function Cards({ Title }) {
+function Cards({ sender, receiver, amount }) {
   return (
     <div className="card main pl-5 pr-4 pb-3">
       <div className="card inside mb-3">
-        <h2>{Title}</h2>
-        <p>200$</p>
-      </div>
-      <div className="card inside mb-3">
-        <h2>Transaction Two</h2>
-        <p>200$</p>
-      </div>
-      <div className="card inside mb-3">
-        <h2>Transaction Three</h2>
-        <p>200$</p>
-      </div>
-      <div className="card inside mb-3">
-        <h2>Transaction one</h2>
-        <p>200$</p>
+        <h2>{sender}</h2>
+        <h2>{receiver}</h2>
+        <p>{amount}</p>
+        <p></p>
       </div>
     </div>
   );
