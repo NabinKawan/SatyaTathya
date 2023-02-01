@@ -1,2 +1,3 @@
 .env
 redis-service/data
+test.py
