@@ -1,25 +1,17 @@
-import socket
+data = '''POST / HTTP/1.1
+Content-Type: application/json
+User-Agent: PostmanRuntime/7.29.2
+Accept: */*
+Postman-Token: fd3d86e8-9ac6-4c0c-9b49-6678f2bbd571
+Host: localhost:7888
+Accept-Encoding: gzip, deflate, br
+Connection: keep-alive
+Content-Length: 11
 
-# create a socket object
-serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+{"hi":'hi'}'''
 
-# get local machine name
-host = socket.gethostname()
+content_length_index = data.find('Content-Length')+len('Content-Length')
 
-port = 9999
+content_length= int(data[content_length_index+2:content_length_index+2+2])
 
-# bind to the port
-serversocket.bind((host, port))
-
-# queue up to 5 requests
-serversocket.listen(5)
-
-while True:
-    # establish a connection
-    clientsocket, addr = serversocket.accept()
-
-    print("Got a connection from %s" % str(addr))
-
-    msg = 'Thank you for connecting' + "\r\n"
-    clientsocket.send(msg.encode('ascii'))
-    clientsocket.close()
+print(data[-content_length:])
