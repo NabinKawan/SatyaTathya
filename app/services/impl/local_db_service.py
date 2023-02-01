@@ -10,18 +10,17 @@ db = redis_db
 class LocalDbService(DbService):
 
     def add_data(self, block: BlockDto):
-        db.set(block.block_hash,json.dumps(block.json()))
+        db.rpush('block:tracks', block.block_hash)
+        db.set(block.block_hash, block.json())
 
     def get_prev_hash(self):
-        pass
-        # return db.set[-1].block_hash
+        return db.lrange('block:tracks', -1, -1)[0]
 
     def get_all_datas(self, data_type: DataFormatEnum = DataFormatEnum.BLOCK):
-        pass
-        # if data_type == DataFormatEnum.BLOCK:
-        #     return db.chain_datas
-        # elif data_type == DataFormatEnum.JSON:
-        #     json_datas = []
-        #     for data in db.chain_datas:
-        #         json_datas.append(data.dict())
-        #     return json_datas
+        block_tracks = db.lrange('block:tracks', 0, -1)
+
+        def get_block(block_hash: str):
+            block_json = json.loads(db.get(block_hash))
+            return BlockDto(**block_json)
+
+        return list(map(get_block, block_tracks))

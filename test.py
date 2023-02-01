@@ -1,31 +1,25 @@
-from typing import Union
-from fastapi import FastAPI, WebSocket
-import json
+import socket
 
-app = FastAPI()
+# create a socket object
+serversocket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
+# get local machine name
+host = socket.gethostname()
 
-@app.get("/")
-def read_root():
-    return {"Hello": "World"}
+port = 9999
 
+# bind to the port
+serversocket.bind((host, port))
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Union[str, None] = None):
-    return {"item_id": item_id, "q": q}
+# queue up to 5 requests
+serversocket.listen(5)
 
+while True:
+    # establish a connection
+    clientsocket, addr = serversocket.accept()
 
-@app.websocket("/ws")
-async def websocket_endpoint(websocket: WebSocket):
-    await websocket.accept()
-    print("accepted")
+    print("Got a connection from %s" % str(addr))
 
-    while True:
-        await websocket.send_text("From API")
-        data = await websocket.receive_json()
-        print(data)
-        
-        
-
-
-
+    msg = 'Thank you for connecting' + "\r\n"
+    clientsocket.send(msg.encode('ascii'))
+    clientsocket.close()
