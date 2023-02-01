@@ -1,3 +1,4 @@
 .env
 redis-service/data
 test.py
+wallet/my-app/node_modules
