@@ -7,7 +7,7 @@ from pydantic import BaseModel
 import models
 from database import engine,SessionLocal
 from sqlalchemy.orm import Session
-
+# from models import Card
 
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI()
@@ -34,6 +34,22 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+@app.post("/api/cards")
+async def create_card(request: Request, db: Session = Depends(get_db)):
+    data = await request.json()
+    try:
+        card = models.Card(sender_name=data["Senders_name"], receiver_name=data["Receivers_name"], balance=data["balance"])
+        db.add(card)
+        db.commit()
+        return {"message": "Card created successfully"}
+    except Exception as e:
+        return {"message": "An error occurred: {}".format(str(e))}
+
+
+@app.get("/api/get_cards")
+def get_all_cards(db:Session=Depends(get_db)):
+    cards = db.query(models.Card).all()
+    return cards
 
 @app.get("/")
 def show_users(db:Session=Depends(get_db)):
@@ -49,9 +65,12 @@ async def login(request: Request, db: Session = Depends(get_db)):
         return {"message": "Invalid username or password"}
 
 
-
 @app.post("/api/transfer")
-async def transfer_balance(request: Request, sender_wallet_id: str, receiver_wallet_id: str, amount: int, db: Session = Depends(get_db)):
+async def transfer_balance(request: Request, db: Session = Depends(get_db)):
+    data = await request.json()
+    sender_wallet_id = data["sender_wallet_id"]
+    receiver_wallet_id = data["receiver_wallet_id"]
+    amount =int(data["amount"])
     sender = db.query(models.User).filter(models.User.username == sender_wallet_id).first()
     receiver = db.query(models.User).filter(models.User.username == receiver_wallet_id).first()
     if sender and receiver:
@@ -66,8 +85,6 @@ async def transfer_balance(request: Request, sender_wallet_id: str, receiver_wal
             return HTTPException(status_code=400, detail="Insufficient balance")
     else:
         return HTTPException(status_code=400, detail="Invalid wallet id")
-
-
 
 
 @app.post("/api/register/")
