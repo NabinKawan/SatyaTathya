@@ -45,7 +45,7 @@ function Details() {
           id="button1"
           className=" bg-blue-500 p-0.5"
           onClick={() => {
-            navigate("/send_ui");
+            navigate("/send_ui", { state: { sender_wallet_id, voteid } });
           }}
         >
           Send

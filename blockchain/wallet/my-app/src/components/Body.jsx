@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,createContext } from "react";
 import "../App.css";
 import Details from "../screens/Details";
 import { useNavigate } from "react-router";
 import {Link } from "react-router-dom";
+const Setid=createContext();
 function Body() {
+  
   const navigate = useNavigate();
   const [voterId, setVoterId] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +23,7 @@ function Body() {
       .then((data) => {
         if (data.message === "Success") {
           console.log("success");
+          
           navigate('/details',{ state: { voterId,password } });
           
         } else {
@@ -68,7 +71,9 @@ function Body() {
             placeholder="Password"
           />
         </div>
-        <button type="submit" className="btn btn-primary">
+        <button type="submit" className="btn btn-primary" onClick={()=>{
+          return <Setid.Provider value={voterId}></Setid.Provider>
+        }}>
           Login
         </button>
       </form>
@@ -77,3 +82,4 @@ function Body() {
 }
 
 export default Body;
+export {Setid}
