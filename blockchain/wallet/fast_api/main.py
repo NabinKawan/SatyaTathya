@@ -7,6 +7,9 @@ from pydantic import BaseModel
 import models
 from database import engine,SessionLocal
 from sqlalchemy.orm import Session
+from argon2 import PasswordHasher
+
+
 # from models import Card
 
 models.Base.metadata.create_all(bind=engine)
@@ -58,11 +61,12 @@ def show_users(db:Session=Depends(get_db)):
 @app.post("/api/login/")
 async def login(request: Request, db: Session = Depends(get_db)):
     data = await request.json()
-    user = db.query(models.User).filter(models.User.username == data["username"], models.User.password == data["password"]).first()
+    user = db.query(models.User).filter(models.User.username == data["username"]).first()
     if user:
-        return {"message": "Success"}
-    else:
-        return {"message": "Invalid username or password"}
+        if PasswordHasher().verify(user.password, data["password"]):
+            return {"message": "Success"}
+    return {"message": "Invalid username or password"}
+
 
 
 @app.post("/api/transfer")
@@ -87,14 +91,21 @@ async def transfer_balance(request: Request, db: Session = Depends(get_db)):
         return HTTPException(status_code=400, detail="Invalid wallet id")
 
 
+import argon2
+
 @app.post("/api/register/")
-def register(username: str, password: str,balance:str, db: Session = Depends(get_db)):
-    user = models.User(username=username, password=password,balance=balance)
+def register(username: str, password: str, balance: str, db: Session = Depends(get_db)):
+    # Hash the password using Argon2
+    hashed_password = argon2.PasswordHasher().hash(password)
+
+    # Create the user with the hashed password
+    user = models.User(username=username, password=hashed_password, balance=balance)
+
     db.add(user)
     db.commit()
     db.refresh(user)
-    return {"message": "Success"}
 
+    return {"message": "Success"}
 
 
 
