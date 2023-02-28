@@ -1,4 +1,9 @@
-from pydantic import BaseSettings
+import pydantic
+
+
+class BaseSettings(pydantic.BaseSettings):
+    class Config:
+        env_file = ".env"
 
 
 class DbSettings(BaseSettings):
@@ -8,8 +13,17 @@ class DbSettings(BaseSettings):
         env_prefix = 'DB_'
 
 
+class BlockChainSettings(BaseSettings):
+    port: int = 5005
+    host: str = 'localhost'
+
+    class Config:
+        env_prefix = 'BLOCKCHAIN_'
+
+
 class Settings(BaseSettings):
     db_settings = DbSettings()
+    blockchain_settings = BlockChainSettings()
 
 
 def get_configs():

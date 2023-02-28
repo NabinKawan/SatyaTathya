@@ -12,6 +12,7 @@ class LocalDbService(DbService):
     def add_data(self, block: BlockDto):
         db.rpush('block:tracks', block.block_hash)
         db.set(block.block_hash, block.json())
+        print(f'Successfully minted {block.block_hash}: {block.json()}')
 
     def get_prev_hash(self):
         return db.lrange('block:tracks', -1, -1)[0]
