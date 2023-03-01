@@ -43,3 +43,13 @@ class DbService(ABC):
             data_type: Type of data format for block
         """
         raise NotImplementedError
+
+    @abstractmethod
+    def update_contract_data(self, block_hash: str, contract_data: str):
+        """
+        Update contract
+
+        Args:
+            block_hash: Block hash
+            contract_data: Contract data
+        """

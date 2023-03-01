@@ -77,7 +77,6 @@ class KhwopaBlockchainServer(BaseHTTPRequestHandler):
 
         elif self.path == '/add_contract':
             if self.headers['Content-Type'] != 'application/json':
-                print('error')
                 self.send_response(400)
                 self.send_header('Content-type', 'text/plain')
                 self.end_headers()
@@ -91,6 +90,28 @@ class KhwopaBlockchainServer(BaseHTTPRequestHandler):
             json_data = json.loads(post_data.decode('utf-8'))
             block_hash = khwopa_service.add_contract(json_data['tx']['byte_code'], json_data['tx']['contract_data'])
             new_response_data = {'contract_address': block_hash}
+            new_json_data = json.dumps(new_response_data)
+            # Send a response back to the client
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            self.wfile.write(new_json_data.encode())
+
+        elif self.path == '/update_contract':
+            if self.headers['Content-Type'] != 'application/json':
+                self.send_response(400)
+                self.send_header('Content-type', 'text/plain')
+                self.end_headers()
+                self.wfile.write(b'Invalid Content-Type, only application/json is supported')
+                return
+
+            # Get the length of the incoming data
+            content_length = int(self.headers['Content-Length'])
+            # Read the incoming data
+            post_data = self.rfile.read(content_length)
+            json_data = json.loads(post_data.decode('utf-8'))
+            khwopa_service.update_contract(json_data['contract_address'], json_data['contract_data'])
+            new_response_data = {'message': f'Successfully updated contract {json_data["contract_address"]}'}
             new_json_data = json.dumps(new_response_data)
             # Send a response back to the client
             self.send_response(200)
