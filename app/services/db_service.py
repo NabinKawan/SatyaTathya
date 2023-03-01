@@ -33,3 +33,13 @@ class DbService(ABC):
             data_type: Type of data format for block
         """
         raise NotImplementedError
+
+    @abstractmethod
+    def get_data_by_identifier(self, block_hash: str, data_type: DataFormatEnum = DataFormatEnum.BLOCK):
+        """
+        Get block from db
+
+        Args:
+            data_type: Type of data format for block
+        """
+        raise NotImplementedError

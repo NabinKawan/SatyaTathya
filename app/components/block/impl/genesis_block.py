@@ -2,10 +2,12 @@ from app.common.service import CommonService
 from app.components.block.block import Block
 from datetime import datetime
 
+from app.models.dtos.block_dto import NormalTxDto
+
 
 class GenesisBlock(Block):
 
-    def __init__(self, tx: str):
+    def __init__(self, tx: NormalTxDto):
         self.timestamp = datetime.now().timestamp()
         self.tx = tx
         self.prev_hash = ''

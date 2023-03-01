@@ -13,6 +13,7 @@ class LocalDbService(DbService):
         db.rpush('block:tracks', block.block_hash)
         db.set(block.block_hash, block.json())
         print(f'Successfully minted {block.block_hash}: {block.json()}')
+        return block.block_hash
 
     def get_prev_hash(self):
         return db.lrange('block:tracks', -1, -1)[0]
@@ -22,6 +23,18 @@ class LocalDbService(DbService):
 
         def get_block(block_hash: str):
             block_json = json.loads(db.get(block_hash))
-            return BlockDto(**block_json)
+            if (data_type == DataFormatEnum.BLOCK):
+                return BlockDto(**block_json)
+            elif (data_type == DataFormatEnum.JSON):
+                return block_json
 
         return list(map(get_block, block_tracks))
+
+    def get_data_by_identifier(self, block_hash: str, data_type: DataFormatEnum = DataFormatEnum.BLOCK):
+        data = db.get(block_hash)
+        if (data):
+            block_json = json.loads(db.get(block_hash))
+            if (data_type == DataFormatEnum.BLOCK):
+                return BlockDto(**block_json)
+            elif (data_type == DataFormatEnum.JSON):
+                return block_json

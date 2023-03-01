@@ -16,6 +16,7 @@ class DbSettings(BaseSettings):
 class BlockChainSettings(BaseSettings):
     port: int = 5005
     host: str = 'localhost'
+    name: str = 'Khwopa Blockchain'
 
     class Config:
         env_prefix = 'BLOCKCHAIN_'

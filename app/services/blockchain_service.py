@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from pydantic import Json
+from typing import Any
 
 
 class BlockchainService(ABC):
@@ -11,6 +13,13 @@ class BlockchainService(ABC):
         """
         Add block
         """
+        raise NotImplementedError
+
+    @abstractmethod
+    def add_contract(self, byte_code: str, contract_data: str):
+        """
+                Add contract
+                """
         raise NotImplementedError
 
     @abstractmethod
