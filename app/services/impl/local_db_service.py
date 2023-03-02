@@ -41,6 +41,6 @@ class LocalDbService(DbService):
 
     def update_contract_data(self, contract_address: str, contract_data: str):
         block_json = json.loads(db.get(contract_address))
-        block = BlockDto(**block_json, contract_data=contract_data)
-        db.set(contract_address, block.json())
-        print(f'Successfully updated contract {block.block_hash}')
+        block_json['contract_data'] = contract_data
+        db.set(contract_address, json.dumps(block_json))
+        print(f'Successfully updated contract {contract_address}: {block_json}')
