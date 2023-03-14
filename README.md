@@ -57,12 +57,12 @@ pip install -r requirements.txt
 ## Technologies
 
 - Python
-- Redis cli (For storing node datas. And persisting datas on disk)
+- Redis (For storing node datas. And persisting datas on disk)
 - Http server (For hosting port for request in blockchain)
 
 ## Contributors
 
-- @NibanK (Blockchain, Redis db, server)
+- @NibanK (Blockchain, Redis db, Server)
 - @Sudeepkasichhwa (Hashing)
 - @developer-prashant-999 (Wallet)
 
