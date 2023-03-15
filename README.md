@@ -25,6 +25,7 @@ pip install -r requirements.txt
 
 ## Usage
 - Add env as shown in env.example
+- Start redis from /redis-service (docker-compose up)
 - Run main.py (It will initialize the genesis block and run the server.)
 - Now you can communicate using blockchian by:<br/>
 1. **Check blockchain status:** Check status of the blockchain by making get request to <u>/status.</u>
@@ -64,6 +65,5 @@ pip install -r requirements.txt
 
 - @NibanK (Blockchain, Redis db, Server)
 - @Sudeepkasichhwa (Hashing)
-- @developer-prashant-999 (Wallet)
 
 
