@@ -8,7 +8,7 @@ class ContractTxDto(BaseModel):
 
 
 class NormalTxDto(BaseModel):
-    metadata: str
+    metadata: Any
 
 
 class BlockDto(BaseModel):

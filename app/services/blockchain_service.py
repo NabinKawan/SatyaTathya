@@ -9,7 +9,7 @@ class BlockchainService(ABC):
     """
 
     @abstractmethod
-    def add_block(self, tx: str):
+    def add_block(self, tx: any):
         """
         Add block
         """

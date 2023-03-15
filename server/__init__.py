@@ -111,7 +111,11 @@ class KhwopaBlockchainServer(BaseHTTPRequestHandler):
             post_data = self.rfile.read(content_length)
             json_data = json.loads(post_data.decode('utf-8'))
             khwopa_service.update_contract(json_data['contract_address'], json_data['contract_data'])
-            new_response_data = {'message': f'Successfully updated contract {json_data["contract_address"]}'}
+            tx = {'inputs': json_data['inputs'], 'address': json_data['contract_address']}
+            # adding contract tx to block
+            block_hash = khwopa_service.add_block(tx)
+            new_response_data = {'tx_hash': block_hash,
+                                 'message': f'Successfully updated contract {json_data["contract_address"]}'}
             new_json_data = json.dumps(new_response_data)
             # Send a response back to the client
             self.send_response(200)
