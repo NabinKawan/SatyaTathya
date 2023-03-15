@@ -3,7 +3,6 @@ import json
 from app.models.enums.data_format_enum import DataFormatEnum
 from app.services.impl.khwopa_service import KhwopaService
 from app.services import db_service
-import socket
 from app.settings import configs
 from server import run_server
 

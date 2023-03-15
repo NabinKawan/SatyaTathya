@@ -11,7 +11,7 @@ from typing import Any
 
 class KhwopaService(BlockchainService):
 
-    def add_block(self, tx: str):
+    def add_block(self, tx: any):
         tx = NormalTxDto(metadata=tx)
         block = NormalBlock(tx)
         return db_service.add_data(BlockDto(block_hash=block.block_hash,
