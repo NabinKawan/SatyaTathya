@@ -1,0 +1,23 @@
+name: Buiild Docker image and deploy to server
+
+on:
+  push:
+    branches: [ 'deployment' ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Get the version
+      id: vars
+      run: echo ::set-output name=tag::$(echo dev)
+    - name: Build the Docker image
+      run: docker build -t ${{ vars.CI_REGISTRY_IMAGE }}:$GITHUB_SHA -t ${{ vars.CI_REGISTRY_IMAGE }}:latest .
+    - run: docker login -u ${{ vars.CI_REGISTRY_USER }} -p ${{ vars.CI_REGISTRY_PASSWORD }} ${{ vars.CI_REGISTRY }}
+    - run: docker push ${{ vars.CI_REGISTRY_IMAGE }}:$GITHUB_SHA
+    - run: docker push ${{ vars.CI_REGISTRY_IMAGE }}:latest
+    
