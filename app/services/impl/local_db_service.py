@@ -12,7 +12,7 @@ class LocalDbService(DbService):
     def add_data(self, block: BlockDto):
         db.rpush('block:tracks', block.block_hash)
         db.set(block.block_hash, block.json())
-        print(f'Successfully minted {block.block_hash}: {block.json()}')
+        print(f'Successfully minted {block.block_hash}')
         return block.block_hash
 
     def get_prev_hash(self):
@@ -43,4 +43,4 @@ class LocalDbService(DbService):
         block_json = json.loads(db.get(contract_address))
         block_json['tx']['contract_data'] = contract_data
         db.set(contract_address, json.dumps(block_json))
-        print(f'Successfully updated contract {contract_address}: {block_json}')
+        print(f'Successfully updated contract {contract_address}')
