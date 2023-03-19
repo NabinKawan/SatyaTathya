@@ -1,8 +1,10 @@
 import redis
+from app.settings import configs
 
+db_settings = configs.db_settings
 redis_db = redis.Redis(
-    host='127.0.0.1',
-    port=6379)
+    host=db_settings.redis_host,
+    port=db_settings.redis_port)
 
 # class ChainDatabase(object):
 #     """
@@ -15,4 +17,3 @@ redis_db = redis.Redis(
 #             cls.instance = super(ChainDatabase, cls).__new__(
 #                 cls, *args, **kwargs)
 #         return cls.instance
-

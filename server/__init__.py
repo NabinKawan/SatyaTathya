@@ -12,6 +12,11 @@ khwopa_service = KhwopaService()
 
 
 class KhwopaBlockchainServer(BaseHTTPRequestHandler):
+    def end_headers(self):
+        self.send_header('Access-Control-Allow-Origin', '*')
+        self.send_header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS')
+        self.send_header('Access-Control-Allow-Headers', 'Content-Type')
+        super().end_headers()
 
     def do_GET(self):
         # checking for path params
@@ -36,8 +41,8 @@ class KhwopaBlockchainServer(BaseHTTPRequestHandler):
             self.end_headers()
             self.wfile.write(json_data.encode())
 
-        elif path.startswith('/blocks/'):
-            block_hash = path.split('/')[2]
+        elif self.path.startswith('/blocks/'):
+            block_hash = self.path.split('/')[2]
             data = db_service.get_data_by_identifier(block_hash, DataFormatEnum.JSON)
             if (data):
                 response_data = data
@@ -125,7 +130,7 @@ class KhwopaBlockchainServer(BaseHTTPRequestHandler):
 
 
 def run_server():
-    server_address = (blockchain_settings.host, blockchain_settings.port)
+    server_address = ('', blockchain_settings.port)
     httpd = HTTPServer(server_address, KhwopaBlockchainServer)
     print(f"Listening on port {server_address[1]}")
     httpd.serve_forever()
