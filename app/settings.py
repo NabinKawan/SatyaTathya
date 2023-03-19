@@ -8,6 +8,8 @@ class BaseSettings(pydantic.BaseSettings):
 
 class DbSettings(BaseSettings):
     type: str = 'local'
+    redis_host: str = 'localhost'
+    redis_port: str = 9000
 
     class Config:
         env_prefix = 'DB_'
