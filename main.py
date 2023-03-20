@@ -17,7 +17,7 @@ def init_genesis_block():
 
 
 def main() -> None:
-    # init_genesis_block()
+    init_genesis_block()
     run_server()
 
 
