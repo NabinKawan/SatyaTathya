@@ -1,5 +1,7 @@
 # SatyaTathya
 
+![image](https://user-images.githubusercontent.com/43606623/231676665-fe1b3118-4a61-475f-916d-abb6508207b0.png)
+
 ## Project Description
 
 - It is a single node blockchain made using python. It is mainly designed for our BBVS project (Election based voting system).
