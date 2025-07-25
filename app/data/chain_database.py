@@ -3,8 +3,8 @@ from app.settings import configs
 
 db_settings = configs.db_settings
 redis_db = redis.Redis(
-    host=db_settings.redis_host,
-    port=db_settings.redis_port)
+    host=db_settings.host,
+    port=db_settings.port)
 
 # class ChainDatabase(object):
 #     """

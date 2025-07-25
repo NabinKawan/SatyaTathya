@@ -1,5 +1,3 @@
-import json
-
 from app.models.enums.data_format_enum import DataFormatEnum
 from app.services.impl.khwopa_service import KhwopaService
 from app.services import db_service
@@ -12,7 +10,7 @@ blockchain_settings = configs.blockchain_settings
 def init_genesis_block():
     khwopa_service = KhwopaService()
     blocks = db_service.get_all_datas()
-    if (len(blocks) == 0):
+    if len(blocks) == 0:
         khwopa_service.init_genesis_block()
 
 
@@ -21,5 +19,5 @@ def main() -> None:
     run_server()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

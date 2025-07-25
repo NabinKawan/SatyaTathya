@@ -7,21 +7,20 @@ class BaseSettings(pydantic.BaseSettings):
 
 
 class DbSettings(BaseSettings):
-    type: str = 'local'
-    redis_host: str = 'localhost'
-    redis_port: str = 9000
+    host: str = "local"
+    port: int = 6379
 
     class Config:
-        env_prefix = 'DB_'
+        env_prefix = "DB_"
 
 
 class BlockChainSettings(BaseSettings):
     port: int = 5005
-    host: str = 'localhost'
-    name: str = 'Khwopa Blockchain'
+    host: str = "localhost"
+    name: str = "SatyaTathya"
 
     class Config:
-        env_prefix = 'BLOCKCHAIN_'
+        env_prefix = "BLOCKCHAIN_"
 
 
 class Settings(BaseSettings):

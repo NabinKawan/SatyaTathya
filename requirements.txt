@@ -1,4 +1,4 @@
-pydantic
-dependency-injector~=4.40.0
+pydantic~=1.10.5
+dependency-injector
 redis
 pydantic[dotenv]
